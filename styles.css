@@ -1,0 +1,187 @@
+:root {
+  --primary: #4f8cff;
+  --secondary: #ffb347;
+  --bg: #f7f7fa;
+  --board-bg: #fff;
+  --x-color: #4f8cff;
+  --o-color: #ff5e5e;
+  --win-line: #2ecc40;
+  --highlight: #ffe066;
+  --shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+body {
+  background: var(--bg);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.page {
+  max-width: 500px;
+  margin: 40px auto;
+  background: var(--board-bg);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  padding: 32px 24px 40px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.game-select {
+  display: flex;
+  gap: 32px;
+  margin-top: 32px;
+}
+button {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 18px 32px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  box-shadow: var(--shadow);
+}
+button:hover {
+  background: var(--secondary);
+  transform: translateY(-2px) scale(1.04);
+}
+.back-btn {
+  align-self: flex-start;
+  margin-bottom: 12px;
+  background: #eee;
+  color: #333;
+  padding: 8px 18px;
+  font-size: 1rem;
+  border-radius: 8px;
+  box-shadow: none;
+}
+.back-btn:hover {
+  background: var(--primary);
+  color: #fff;
+}
+.ttt-board {
+  display: grid;
+  grid-template-columns: repeat(3, 80px);
+  grid-template-rows: repeat(3, 80px);
+  gap: 10px;
+  margin-top: 24px;
+}
+.square {
+  width: 80px;
+  height: 80px;
+  background: #f0f4ff;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: var(--shadow);
+  user-select: none;
+}
+.square.x { color: var(--x-color); }
+.square.o { color: var(--o-color); }
+.square:active {
+  background: var(--highlight);
+}
+.square.winner {
+  background: var(--win-line);
+  color: #fff !important;
+  animation: winner-glow 0.7s alternate infinite;
+}
+@keyframes winner-glow {
+  0% { box-shadow: 0 0 0 0 var(--win-line); }
+  100% { box-shadow: 0 0 16px 6px var(--win-line); }
+}
+.message {
+  font-size: 1.3rem;
+  margin: 18px 0 0 0;
+  min-height: 32px;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+}
+.ultimate-board {
+  display: grid;
+  grid-template-columns: repeat(3, 90px);
+  grid-template-rows: repeat(3, 90px);
+  gap: 12px;
+  margin-top: 18px;
+}
+.ultimate-small-board {
+  background: #f0f4ff;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 26px);
+  grid-template-rows: repeat(3, 26px);
+  gap: 4px;
+  position: relative;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.2s, border 0.2s;
+}
+.ultimate-small-board.active {
+  border: 3px solid var(--highlight);
+  box-shadow: 0 0 0 4px var(--highlight);
+  z-index: 1;
+}
+.ultimate-small-board.won-x {
+  background: rgba(79, 140, 255, 0.18);
+}
+.ultimate-small-board.won-o {
+  background: rgba(255, 94, 94, 0.18);
+}
+.ultimate-small-board.tie {
+  background: #e0e0e0;
+}
+.ultimate-square {
+  width: 26px;
+  height: 26px;
+  background: #fff;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+  user-select: none;
+}
+.ultimate-square.x { color: var(--x-color); }
+.ultimate-square.o { color: var(--o-color); }
+.ultimate-square:active {
+  background: var(--highlight);
+}
+.win-line {
+  position: absolute;
+  left: 0; top: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+.big-message {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: var(--win-line);
+  margin-top: 24px;
+  text-align: center;
+  animation: pop-in 0.7s;
+}
+@keyframes pop-in {
+  0% { transform: scale(0.7); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@media (max-width: 600px) {
+  .page { padding: 12px 2px 24px 2px; }
+  .ttt-board { grid-template-columns: repeat(3, 60px); grid-template-rows: repeat(3, 60px); }
+  .square { width: 60px; height: 60px; font-size: 1.6rem; }
+  .ultimate-board { grid-template-columns: repeat(3, 60px); grid-template-rows: repeat(3, 60px); }
+  .ultimate-small-board { grid-template-columns: repeat(3, 16px); grid-template-rows: repeat(3, 16px); }
+  .ultimate-square { width: 16px; height: 16px; font-size: 0.8rem; }
+} 
